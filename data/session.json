@@ -1,1 +1,6 @@
-{"status":"offline","boot_time":""}
+{
+  "summary": "AI summary not available. Install Ollama (ollama.com) or configure an API key.",
+  "activities": [],
+  "boot_time": "2026-07-26T16:59:37.335424",
+  "duration": 1.7246918333333334
+}
