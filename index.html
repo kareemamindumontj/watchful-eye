@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<title>Watchful Eye</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,Helvetica,sans-serif;background:#0a0a0a;color:#e0e0e0;padding:0 0 80px}
+.tab-bar{position:fixed;top:0;left:0;right:0;display:flex;background:#1a1a1a;border-bottom:1px solid #333;z-index:100}
+.tab{flex:1;padding:14px 0;text-align:center;background:transparent;color:#888;border:none;font-size:15px;font-weight:600}
+.tab.active{color:#0a84ff;border-bottom:2px solid #0a84ff}
+.tab-content{display:none;padding:60px 12px 20px}
+.tab-content.active{display:block}
+.stream-container{width:100%;background:#111;border-radius:12px;overflow:hidden;margin-bottom:12px;min-height:200px;display:flex;align-items:center;justify-content:center}
+#live-screen{width:100%;display:block}
+.overlay{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.6);padding:4px 10px;border-radius:8px;font-size:11px;color:#aaa}
+.controls{display:flex;gap:8px;flex-wrap:wrap}
+.btn{flex:1;min-width:80px;padding:12px 16px;background:#1a1a1a;color:#e0e0e0;border:1px solid #333;border-radius:10px;font-size:14px;text-align:center}
+.btn.active{background:#0a84ff;color:#fff;border-color:#0a84ff}
+h2{font-size:17px;font-weight:600;margin:20px 0 10px;color:#aaa;text-transform:uppercase}
+.session-card{background:#151515;border-radius:10px;padding:12px;margin-bottom:8px;border:1px solid #222}
+.session-card .date{font-size:13px;color:#888}
+.session-card .meta{font-size:12px;color:#666;margin-top:4px}
+.summary-box{background:#151515;border-radius:10px;padding:14px;line-height:1.5;font-size:14px;margin-bottom:12px;border:1px solid #222;white-space:pre-wrap}
+.hint{font-size:12px;color:#666;margin-top:8px}
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal.hidden{display:none}
+.modal-content img{max-width:100%;border-radius:12px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<div class="tab-bar"><button class="tab active" data-tab="live">Live</button><button class="tab" data-tab="info">Info</button></div>
+<div id="tab-live" class="tab-content active">
+  <div class="stream-container"><img id="live-screen" src="" alt="Loading..."></div>
+  <div class="controls">
+    <button id="btn-refresh" class="btn">Refresh</button>
+    <button id="btn-webcam" class="btn">Webcam</button>
+  </div>
+  <p style="text-align:center;color:#666;font-size:12px;margin-top:8px">Updates every 10s</p>
+  <div id="webcam-modal" class="modal hidden">
+    <div class="modal-content"><img id="webcam-img" src="" alt="Webcam"><button id="btn-close-webcam" class="btn">Close</button></div>
+  </div>
+</div>
+<div id="tab-info" class="tab-content">
+  <h2>Session</h2>
+  <div id="session-info" class="session-card">Loading...</div>
+  <h2>Summary</h2>
+  <div id="summary-text" class="summary-box">Loading...</div>
+  <h2>Screenshots</h2>
+  <div id="screenshots-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
+</div>
+<script>
+const API = 'https://raw.githubusercontent.com/kareemamindumontj/watchful-eye/master/data';
+let autoRefresh = true;
+let refreshTimer = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTabs();
+  initLive();
+  loadInfo();
+  setInterval(loadInfo, 15000);
+});
+
+function initTabs() {
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      tab.classList.add('active');
+      const el = document.getElementById('tab-' + tab.dataset.tab);
+      if (el) el.classList.add('active');
+    });
+  });
+}
+
+function initLive() {
+  const img = document.getElementById('live-screen');
+  const wcImg = document.getElementById('webcam-img');
+
+  async function loadState() {
+    try {
+      const r = await fetch(API + '/state.json?' + Date.now());
+      if (!r.ok) return;
+      const state = await r.json();
+      if (state.screen && img) img.src = state.screen;
+    } catch(e) {}
+  }
+
+  document.getElementById('btn-refresh').addEventListener('click', loadState);
+  document.getElementById('btn-webcam').addEventListener('click', async () => {
+    try {
+      const r = await fetch(API + '/state.json?' + Date.now());
+      if (r.ok) {
+        const state = await r.json();
+        if (state.webcam && wcImg) wcImg.src = state.webcam;
+      }
+    } catch(e) {}
+    document.getElementById('webcam-modal').classList.remove('hidden');
+  });
+  document.getElementById('btn-close-webcam').addEventListener('click', () => {
+    document.getElementById('webcam-modal').classList.add('hidden');
+  });
+
+  loadState();
+  setInterval(loadState, 10000);
+}
+
+async function loadInfo() {
+  try {
+    const r = await fetch(API + '/state.json?' + Date.now());
+    if (!r.ok) return;
+    const state = await r.json();
+    const el = document.getElementById('session-info');
+    if (el) el.innerHTML = '<div class=\"date\">Boot: ' + (state.boot_time || '?') + '</div><div class=\"meta\">Duration: ' + (state.duration || '0') + ' min &middot; ' + (state.ts || '') + '</div>';
+    const sel = document.getElementById('summary-text');
+    if (sel) sel.textContent = state.summary || 'No summary yet.';
+  } catch(e) {
+    document.getElementById('session-info').textContent = 'Waiting for data...';
+  }
+}
+</script>
+</body>
+</html>
