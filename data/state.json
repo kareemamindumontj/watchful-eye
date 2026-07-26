@@ -1,1 +1,1 @@
-{"screen": "data:image/jpeg;base64,/9j/4AAQSkZJRg==", "webcam": "data:image/jpeg;base64,/9j/4AAQSkZJRg==", "ts": "2026-07-26 17:13:23", "summary": "AI summary not available. Install Ollama (ollama.com) or configure an API key.", "boot_time": "2026-07-26T16:59:37.335424", "duration": 1.7246918333333334}
+{"test": true, "ts": "hello"}
