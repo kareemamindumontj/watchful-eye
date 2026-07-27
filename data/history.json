@@ -207,6 +207,14 @@
       "activity_count": 30,
       "summary": "AI summary not available. Install Ollama (ollama.com) or configure an API key.",
       "webcam": "C:\\Users\\karee\\AppData\\Local\\WatchfulEye\\data\\webcam\\boot_20260726_182541.jpg"
+    },
+    {
+      "id": "20260727_181319",
+      "boot_time": "2026-07-27T18:13:19.358238",
+      "duration": 1.5851388166666667,
+      "activity_count": 2,
+      "summary": "AI summary not available. Install Ollama (ollama.com) or configure an API key.",
+      "webcam": "C:\\Users\\karee\\AppData\\Local\\WatchfulEye\\data\\webcam\\boot_20260727_181320.jpg"
     }
   ]
 }
