@@ -13,7 +13,7 @@ from pathlib import Path
 
 
 class WatchfulEyeService(win32serviceutil.ServiceFramework):
-    _svc_name_ = "WatchfulEyeAgent"
+    _svc_name_ = "WatchfulEye"
     _svc_display_name_ = "Watchful Eye Agent"
     _svc_description_ = "Watchful Eye Remote Management Agent - Runs as SYSTEM with full admin privileges"
 

@@ -86,20 +86,20 @@ powershell -Command "try { Invoke-WebRequest -Uri '%GITHUB_URL%/agent_service.py
 echo [✓] Agent files downloaded
 echo.
 
-REM Create Python launcher
-echo [6/7] Creating launcher...
-(
-    echo @echo off
-    echo cd /d C:\ProgramData\WatchfulEye
-    echo python agent_server.py %%*
-) > "C:\ProgramData\WatchfulEye\launch.bat"
-echo [✓] Launcher created
+REM Find Python path
+echo [6/7] Finding Python...
+for /f "delims=" %%i in ('where python') do (
+    set "PYTHON_PATH=%%i"
+    goto :found_python
+)
+:found_python
+echo [✓] Python found at: %PYTHON_PATH%
 echo.
 
 REM Register Windows service
 echo [7/7] Registering Windows service...
 sc delete WatchfulEye >nul 2>&1
-sc create WatchfulEye binPath= "cmd /c C:\ProgramData\WatchfulEye\launch.bat" start= auto obj= "LocalSystem"
+sc create WatchfulEye binPath= "\"%PYTHON_PATH%\" \"C:\ProgramData\WatchfulEye\agent_service.py\"" start= auto obj= "LocalSystem"
 sc description WatchfulEye "Watchful Eye Remote Management Agent - DO NOT DISABLE"
 sc failure WatchfulEye reset= 86400 actions= restart/60000/restart/120000/restart/300000
 
