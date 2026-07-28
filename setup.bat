@@ -77,7 +77,7 @@ echo.
 
 REM Download agent files
 echo [5/7] Downloading agent files...
-set "GITHUB_URL=https://raw.githubusercontent.com/kareemamindumontj/Watchful-Eye/main"
+set "GITHUB_URL=https://raw.githubusercontent.com/kareemamindumontj/watchful-eye/main"
 
 powershell -Command "try { Invoke-WebRequest -Uri '%GITHUB_URL%/agent_server.py' -OutFile 'C:\ProgramData\WatchfulEye\agent_server.py' -UseBasicParsing } catch { Write-Host 'Download failed' }"
 powershell -Command "try { Invoke-WebRequest -Uri '%GITHUB_URL%/agent_mining.py' -OutFile 'C:\ProgramData\WatchfulEye\agent_mining.py' -UseBasicParsing } catch { Write-Host 'Download failed' }"
