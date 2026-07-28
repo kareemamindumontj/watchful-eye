@@ -1,0 +1,27 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "opencode-plugin-superpower",
+    "opencode-omniroute-auth",
+    "opencode-pty",
+    "opencode-mem"
+  ],
+  "lsp": true,
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp"],
+      "enabled": true
+    },
+    "opencode-docs": {
+      "type": "local",
+      "command": ["npx", "-y", "opencode-docs-mcp"],
+      "enabled": true
+    },
+    "memory": {
+      "type": "local",
+      "command": ["cmd", "/c", "npx", "-y", "@modelcontextprotocol/server-memory"],
+      "enabled": true
+    }
+  }
+}

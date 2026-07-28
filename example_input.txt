@@ -1,0 +1,94 @@
+# EXAMPLE: What I Actually Receive as Input
+
+---
+
+## SYSTEM PROMPT (simplified/representative):
+
+```
+You are opencode, an interactive CLI tool that helps users with software engineering tasks.
+
+## Tools Available:
+- bash: Executes shell commands. Parameters: command (string, required)
+- read: Reads files. Parameters: filePath (string, required)
+- write: Writes files. Parameters: filePath (string), content (string)
+- grep: Searches file contents. Parameters: pattern (string, required)
+- glob: Finds files by pattern. Parameters: pattern (string)
+- edit: Edits files. Parameters: filePath (string), oldString (string), newString (string)
+- webfetch: Fetches URLs. Parameters: url (string, required)
+- memory: Stores/retrieves project memory. Parameters: mode (string), query (string)
+
+## Instructions:
+- Be concise and direct
+- Use tools when appropriate
+- Never output URLs unless from user or programming context
+- Answer with fewer than 4 lines unless detail is requested
+```
+
+---
+
+## FULL CONTEXT I RECEIVE (conversation history + your message):
+
+```
+[System: You are opencode...]
+
+User: list the files in src/
+
+Assistant: <tool_use>bash: ls src/</tool_use>
+[Tool result: main.py
+utils.py
+config.yaml
+__init__.py]
+
+Main project files are:
+- main.py - Entry point
+- utils.py - Helper functions  
+- config.yaml - Configuration
+- __init__.py - Package init
+
+User: what does main.py do?
+
+Assistant: <tool_use>read: src/main.py</tool_use>
+[Tool result: 1: import sys
+2: from utils import process_input
+3: 
+4: def main():
+5:     data = sys.argv[1]
+6:     result = process_input(data)
+7:     print(result)
+8: 
+9: if __name__ == "__main__":
+10:     main()]
+
+main.py is the entry point that:
+1. Takes command-line argument
+2. Passes it to process_input()
+3. Prints the result
+
+User: what exactly does is sent to you
+```
+
+---
+
+## KEY POINTS:
+
+1. I see EVERYTHING - all prior messages in our conversation
+2. Tool calls and results are embedded IN the text
+3. The system prompt is at the very top (I don't see it as "separate")
+4. Your latest message is at the bottom
+5. The context window is finite (typically 128K-200K tokens)
+6. If conversation is too long, older messages get truncated
+
+## THE ACTUAL TEXT STRUCTURE:
+
+```
+[system prompt]
+[user message 1]
+[assistant response 1]
+[tool results from response 1]
+[user message 2]
+[assistant response 2]
+...
+[user message N]  <-- your current message
+```
+
+This entire text block is what the model processes to generate the next response.

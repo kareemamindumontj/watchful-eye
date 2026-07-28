@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<title>Watchful Eye</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="tab-bar">
+  <button class="tab active" data-tab="live">Live</button>
+  <button class="tab" data-tab="history">History</button>
+  <button class="tab" data-tab="summary">Summary</button>
+</div>
+
+<div id="tab-live" class="tab-content active">
+  <div class="stream-container">
+    <img id="live-screen" src="" alt="Live screen">
+    <div class="stream-overlay">
+      <span id="update-indicator">●</span>
+      <span id="timestamp"></span>
+    </div>
+  </div>
+  <div class="controls">
+    <button id="btn-refresh" class="btn">Refresh</button>
+    <button id="btn-webcam" class="btn">Webcam</button>
+    <button id="btn-autorefresh" class="btn active">Auto (3s)</button>
+  </div>
+  <div id="webcam-modal" class="modal hidden">
+    <div class="modal-content">
+      <img id="webcam-img" src="" alt="Webcam">
+      <button id="btn-close-webcam" class="btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="tab-history" class="tab-content">
+  <h2>Sessions</h2>
+  <div id="sessions-list"></div>
+  <h2>Recent Screenshots</h2>
+  <div id="screenshots-grid"></div>
+</div>
+
+<div id="tab-summary" class="tab-content">
+  <h2>Latest AI Summary</h2>
+  <div id="summary-text" class="summary-box">Loading...</div>
+  <button id="btn-summarize" class="btn">Generate Summary</button>
+  <p class="hint">Summarizes active windows since boot.</p>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

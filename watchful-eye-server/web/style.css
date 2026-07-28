@@ -1,0 +1,240 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 30px 0;
+    border-bottom: 1px solid #333;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #00d4ff;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+header p {
+    color: #888;
+    margin-top: 10px;
+}
+
+h2 {
+    color: #00d4ff;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.devices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.device-card {
+    background: #16213e;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.device-card:hover {
+    border-color: #00d4ff;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.device-card.online {
+    border-left: 4px solid #00ff88;
+}
+
+.device-card.offline {
+    border-left: 4px solid #ff4444;
+    opacity: 0.7;
+}
+
+.device-name {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.device-info {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.device-info span {
+    display: block;
+    margin: 5px 0;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.status-badge.online {
+    background: rgba(0, 255, 136, 0.2);
+    color: #00ff88;
+}
+
+.status-badge.offline {
+    background: rgba(255, 68, 68, 0.2);
+    color: #ff4444;
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00d4ff, #0099cc);
+    color: #fff;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: #000;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #7b68ee, #5b4cd4);
+    color: #fff;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ffa500, #cc8400);
+    color: #000;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #666, #444);
+    color: #fff;
+}
+
+.screen-container {
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    max-height: 600px;
+}
+
+.screen-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.files-list {
+    background: #16213e;
+    border-radius: 12px;
+    padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.file-item {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.file-item:hover {
+    background: #1a1a40;
+}
+
+.file-item.folder {
+    color: #00d4ff;
+}
+
+.file-item.file {
+    color: #ccc;
+}
+
+.path-bar {
+    background: #16213e;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-family: monospace;
+    color: #00ff88;
+}
+
+#command-input {
+    width: 100%;
+    padding: 12px;
+    background: #16213e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: #eee;
+    font-family: monospace;
+    margin-bottom: 15px;
+}
+
+#command-output {
+    background: #0d1117;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 15px 0;
+    white-space: pre-wrap;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .devices-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .controls-grid {
+        grid-template-columns: 1fr;
+    }
+}

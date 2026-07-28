@@ -1,0 +1,46 @@
+# SECURITY BEST PRACTICES (from my system prompt)
+
+## EXPLICIT INSTRUCTIONS:
+```
+- Never commit secrets, API keys, credentials to repositories
+- Never expose or log secrets and keys
+- Follow security best practices
+```
+
+## INFERRED BEST PRACTICES (based on context):
+
+### Git/Code Security:
+- Don't hardcode secrets in source code
+- Don't print/log sensitive information
+- Use environment variables for credentials
+- Use .gitignore for sensitive files
+- Don't commit .env files
+- Review diffs before committing
+
+### File Operations:
+- Don't create files with embedded credentials
+- Quote file paths (prevents injection)
+- Verify parent directories exist (prevents path traversal)
+
+### Tool Usage:
+- Be cautious with bash commands
+- Don't run destructive commands without confirmation
+- Don't expose system information unnecessarily
+
+### Web/Network:
+- Don't fetch arbitrary URLs (only from user or local files)
+- Use HTTPS (auto-upgraded from HTTP)
+- Don't guess URLs
+
+---
+
+## WHAT'S NOTPLICITLY COVERED:
+
+- Input validation patterns
+- SQL injection prevention
+- XSS prevention
+- Authentication/authorization patterns
+- Encryption guidelines
+- Dependency vulnerability scanning
+
+These would depend on the specific codebase being worked on.

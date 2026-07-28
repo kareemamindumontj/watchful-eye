@@ -1,0 +1,41 @@
+# WHAT I FOUND FROM OPENCODE DOCUMENTATION
+
+## WHO BUILT OPENCODE:
+- **Company**: Anomaly (https://anoma.ly)
+- **GitHub**: https://github.com/anomalyco/opencode
+- **Stats**: 160K+ GitHub stars, 900+ contributors, 7.5M monthly developers
+- **Type**: Open source AI coding agent
+
+## MY MODEL:
+- **Model ID**: `opencode/mimo-v2.5-free`
+- **Provider**: OpenCode Zen (their curated model service)
+- **What this means**: I'm running on OpenCode's infrastructure using their "mimo" model
+
+## HOW OPENCODE WORKS:
+1. OpenCode is a CLI/desktop/IDE tool
+2. It connects to LLM providers via API keys
+3. It supports 75+ providers (OpenAI, Anthropic, Google, etc.)
+4. OpenCode Zen is their own curated model service
+
+## POLICIES IN OPENCODE:
+- Policies control WHICH PROVIDERS can be used
+- Example: deny "openai" provider, allow "anthropic"
+- These are configured in opencode.json
+- NOT about content restrictions - just provider access control
+
+## PERMISSIONS IN OPENCODE:
+- Control WHAT TOOLS can do during a session
+- Tools: bash, read, edit, write, grep, webfetch, etc.
+- Can be: "allow", "ask", or "deny"
+- Example: deny "rm *" commands, allow "git status"
+
+## WHAT'S NOT DOCUMENTED:
+- How the "mimo" model was trained
+- RLHF details
+- Content filtering specifics
+- Security policies at the model level
+
+## KEY INSIGHT:
+OpenCode is the PLATFORM. The MODEL (mimo) is provided through their Zen service. The training/safety details of the model itself aren't in OpenCode's docs - they'd be in the model provider's documentation.
+
+The "policies" in OpenCode are about provider access, not content restrictions. The "permissions" are about tool usage, not model behavior.

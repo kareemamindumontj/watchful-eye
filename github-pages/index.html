@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    <title>Watchful Eye</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <h1>Watchful Eye</h1>
+            <p>Remote Device Management</p>
+            <form id="login-form">
+                <input type="password" id="password-input" placeholder="Enter password" autocomplete="off">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <p id="login-error" class="error hidden">Incorrect password</p>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="screen hidden">
+        <header class="app-header">
+            <button id="menu-btn" class="menu-btn">&#9776;</button>
+            <h1>Watchful Eye</h1>
+            <span id="connection-status" class="status-dot offline"></span>
+        </header>
+
+        <!-- Sidebar Menu -->
+        <div id="sidebar" class="sidebar hidden">
+            <div class="sidebar-header">
+                <h2>Menu</h2>
+                <button id="close-sidebar" class="close-btn">&times;</button>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-view="devices">Devices</button>
+                <button class="nav-item" data-view="mining">Mining Control</button>
+                <button class="nav-item" data-view="settings">Settings</button>
+                <button class="nav-item" data-view="logout">Logout</button>
+            </nav>
+        </div>
+
+        <!-- Devices View -->
+        <div id="view-devices" class="view active">
+            <div class="view-header">
+                <h2>Devices</h2>
+                <button id="refresh-devices" class="btn btn-small">Refresh</button>
+            </div>
+            <div id="devices-list" class="devices-list"></div>
+        </div>
+
+        <!-- Device Control View -->
+        <div id="view-device-control" class="view hidden">
+            <div class="view-header">
+                <button id="back-to-devices" class="btn btn-small">&larr; Back</button>
+                <h2 id="device-name">Device</h2>
+            </div>
+
+            <div id="device-info" class="device-info-card"></div>
+
+            <div class="control-grid">
+                <button class="control-btn" id="btn-screen">
+                    <span class="control-icon">&#128187;</span>
+                    <span>Screen</span>
+                </button>
+                <button class="control-btn" id="btn-mic">
+                    <span class="control-icon">&#127908;</span>
+                    <span>Microphone</span>
+                </button>
+                <button class="control-btn" id="btn-files">
+                    <span class="control-icon">&#128193;</span>
+                    <span>Files</span>
+                </button>
+                <button class="control-btn" id="btn-admin">
+                    <span class="control-icon">&#128100;</span>
+                    <span>Create Admin</span>
+                </button>
+                <button class="control-btn" id="btn-command">
+                    <span class="control-icon">&#128187;</span>
+                    <span>Run Command</span>
+                </button>
+                <button class="control-btn" id="btn-mining">
+                    <span class="control-icon">&#9889;</span>
+                    <span>Mining</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Screen View -->
+        <div id="view-screen" class="view hidden">
+            <div class="view-header">
+                <button id="back-from-screen" class="btn btn-small">&larr; Back</button>
+                <h2>Screen Control</h2>
+            </div>
+            <div class="screen-container">
+                <img id="remote-screen" src="" alt="Remote Screen">
+                <div class="screen-overlay">
+                    <span id="screen-status">Connecting...</span>
+                </div>
+            </div>
+            <div class="keyboard-shortcuts">
+                <button class="shortcut-btn" data-keys="ctrl,alt,delete">Ctrl+Alt+Del</button>
+                <button class="shortcut-btn" data-keys="alt,tab">Alt+Tab</button>
+                <button class="shortcut-btn" data-keys="alt,f4">Alt+F4</button>
+                <button class="shortcut-btn" data-keys="win">Win</button>
+            </div>
+            <div class="type-bar">
+                <input type="text" id="type-input" placeholder="Type text here...">
+                <button id="btn-type" class="btn btn-small">Send</button>
+            </div>
+        </div>
+
+        <!-- Microphone View -->
+        <div id="view-mic" class="view hidden">
+            <div class="view-header">
+                <button id="back-from-mic" class="btn btn-small">&larr; Back</button>
+                <h2>Microphone</h2>
+            </div>
+            <div class="mic-controls">
+                <button id="btn-listen" class="btn btn-large">Start Listening</button>
+                <button id="btn-record" class="btn btn-large btn-secondary">Record (10s)</button>
+                <div class="volume-meter">
+                    <div id="volume-bar" class="volume-bar"></div>
+                </div>
+                <p id="mic-status">Disconnected</p>
+            </div>
+        </div>
+
+        <!-- Files View -->
+        <div id="view-files" class="view hidden">
+            <div class="view-header">
+                <button id="back-from-files" class="btn btn-small">&larr; Back</button>
+                <h2>Files</h2>
+            </div>
+            <div id="current-path" class="path-bar">C:\</div>
+            <div id="files-list" class="files-list"></div>
+        </div>
+
+        <!-- Command View -->
+        <div id="view-command" class="view hidden">
+            <div class="view-header">
+                <button id="back-from-command" class="btn btn-small">&larr; Back</button>
+                <h2>Run Command</h2>
+            </div>
+            <div class="command-input">
+                <input type="text" id="command-input" placeholder="Enter command...">
+                <button id="btn-execute" class="btn btn-primary">Execute</button>
+            </div>
+            <pre id="command-output" class="command-output"></pre>
+        </div>
+
+        <!-- Mining View -->
+        <div id="view-mining" class="view hidden">
+            <div class="view-header">
+                <button id="back-from-mining" class="btn btn-small">&larr; Back</button>
+                <h2>Mining Control</h2>
+            </div>
+            <div class="mining-controls">
+                <div class="mining-status">
+                    <p>Status: <span id="mining-status">Unknown</span></p>
+                    <p>Hashrate: <span id="mining-hashrate">0 H/s</span></p>
+                    <p>Temperature: <span id="mining-temp">0°C</span></p>
+                </div>
+                <div class="mining-buttons">
+                    <button id="btn-mining-on" class="btn btn-large btn-success">Enable Mining</button>
+                    <button id="btn-mining-off" class="btn btn-large btn-danger">Disable Mining</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings View -->
+        <div id="view-settings" class="view hidden">
+            <div class="view-header">
+                <h2>Settings</h2>
+            </div>
+            <div class="settings-content">
+                <div class="setting-item">
+                    <label>Pi Server IP</label>
+                    <input type="text" id="setting-pi-ip" placeholder="100.x.x.x">
+                </div>
+                <div class="setting-item">
+                    <label>Change Password</label>
+                    <input type="password" id="setting-new-password" placeholder="New password">
+                </div>
+                <button id="btn-save-settings" class="btn btn-primary">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

