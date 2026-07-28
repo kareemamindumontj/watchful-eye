@@ -652,19 +652,16 @@ def start_agent(port=9090):
             pass
 
     PI_SERVER = config.get("pi_server", "")
-    if not PI_SERVER:
-        print("ERROR: Pi server not configured!")
-        print("Set pi_server in:", CONFIG_FILE)
-        return
 
-    heartbeat_thread = threading.Thread(target=heartbeat_loop, daemon=True)
-    heartbeat_thread.start()
+    if PI_SERVER:
+        heartbeat_thread = threading.Thread(target=heartbeat_loop, daemon=True)
+        heartbeat_thread.start()
 
     server = HTTPServer(("0.0.0.0", port), AgentHandler)
     print(f"Watchful Eye Agent running on port {port}")
     print(f"Device ID: {get_device_id()}")
     print(f"Hostname: {get_hostname()}")
-    print(f"PI Server: {PI_SERVER}")
+    print(f"PI Server: {PI_SERVER or 'Not configured (standalone mode)'}")
 
     try:
         server.serve_forever()
